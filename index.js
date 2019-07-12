@@ -28,6 +28,11 @@ var lr = rl.on('line', function(line, lineCount, byteCount) {
     }
     if ( secondLine ) {
       
+      var findStringIndex = line.search(/companyPos\d{1,3}\s=\snew/i);
+      if (findStringIndex === 4) {
+        data[i - 1].position = line.substring(42, lineLength - 2)
+      }
+      
       var findStringIndex = line.search(/icon\:/i);
       if (findStringIndex === 4) {
         data[i - 1].iconType = line.substring(10, lineLength - 1)
@@ -46,6 +51,6 @@ var lr = rl.on('line', function(line, lineCount, byteCount) {
 .on('end', function (e) {
 
   var json = JSON.stringify(data);
-  fs.writeFile('myjsonfile.json', json, 'utf8', function(){});
+  fs.writeFile('data.json', json, 'utf8', function(){});
 
 });
